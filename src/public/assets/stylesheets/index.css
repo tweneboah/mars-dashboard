@@ -36,3 +36,10 @@ footer {
 @media (min-width: 1824px) {
   /* use mobile */
 }
+
+.parent {
+  background-color: blue;
+  display: flex;
+  justify-content: space-around;
+  height: 50vh;
+}
