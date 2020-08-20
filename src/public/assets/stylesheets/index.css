@@ -43,3 +43,9 @@ footer {
   justify-content: space-around;
   height: 50vh;
 }
+
+.select-rover-container {
+  background-color: rebeccapurple;
+  display: flex;
+  flex-direction: column;
+}
