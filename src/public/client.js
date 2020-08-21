@@ -1,14 +1,8 @@
 let store = {
   user: { name: 'Student' },
   apod: '',
-  rovers: ['Curiosity', 'Opportunity', 'Spirit'],
+  rovers: {},
 };
-
-//DOM
-const rovers = document.querySelector('#rovers');
-rovers.addEventListener('input', e => {
-  console.log(e.target.value);
-});
 
 // add our markup to the page
 const root = document.getElementById('root');
@@ -61,7 +55,6 @@ const Greeting = name => {
           <h1>Welcome, ${name}!</h1>
       `;
   }
-
   return `
       <h1>Hello!</h1>
   `;
@@ -104,35 +97,22 @@ const getImageOfTheDay = state => {
     .then(apod => updateStore(store, { apod }));
   return apod;
 };
-//get curriosity
-const getCuriosityRoverData = () => {
-  fetch(`http://localhost:3000/curiosity`)
+
+//get Rover data
+const getRoverData = rover => {
+  fetch(`http://localhost:3000/${rover}`)
     .then(res => res.json())
     .then(data => {
-      let dataArr = data.image.photos[0];
-      console.log(dataArr);
+      let rovers = data.image.photos[0];
+      updateStore(store, { rovers });
+      console.log(store);
     });
 };
 
-//get opportunity
-const getOpportunityData = () => {
-  fetch(`http://localhost:3000/opportunity`)
-    .then(res => res.json())
-    .then(data => {
-      let dataArr = data.image.photos[0];
-      console.log(dataArr);
-    });
-};
+//DOM
+const rovers = document.querySelector('#rovers');
+rovers.addEventListener('input', e => {
+  getRoverData(e.target.value);
+});
 
-//get spirit
-const getSpiritData = () => {
-  fetch(`http://localhost:3000/spirit`)
-    .then(res => res.json())
-    .then(data => {
-      let dataArr = data.image.photos[0];
-      console.log(dataArr);
-    });
-};
-getSpiritData();
-getOpportunityData();
-getCuriosityRoverData();
+console.log(store);
