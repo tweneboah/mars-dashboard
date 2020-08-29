@@ -34,15 +34,16 @@ const App = state => {
                   explanation are returned. These keywords could be used as auto-generated hashtags for twitter or instagram feeds;
                   but generally help with discoverability of relevant imagery.
               </p>
-              ${ImageOfTheDay(apod)}
+   
           </section>
+        ${displayRoverData(store.rovers)}
       </main>
       <footer></footer>
   `;
 };
 
 // listening for load event because page should load before any JS is called
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   render(root, store);
 });
 
@@ -58,6 +59,28 @@ const Greeting = name => {
   return `
       <h1>Hello!</h1>
   `;
+};
+
+const displayRoverData = rover => {
+  if (rover.rover !== undefined) {
+    const { id, img_src, earth_date } = rover;
+    const { name, landing_date, launch_date, status } = rover.rover;
+    console.log(rover);
+    console.log(rover);
+    return `<div class="rover_container">
+  <div class="rover_child">
+  <h1>${name}</h1> 
+  <img src=${img_src} alt="">
+  <p>landing_date: ${landing_date}</p>
+    <p>launch_date : ${launch_date}</p>
+    <p>Earth date : ${earth_date}</p>
+
+    <p>Status: ${status}</p>
+  </div>
+</div>`;
+  } else {
+    return `<h1>Loading rover......</h1>`;
+  }
 };
 
 // Example of a pure function that renders infomation requested from the backend
@@ -91,7 +114,6 @@ const ImageOfTheDay = apod => {
 // Example API call
 const getImageOfTheDay = state => {
   let { apod } = state;
-
   fetch(`http://localhost:3000/apod`)
     .then(res => res.json())
     .then(apod => updateStore(store, { apod }));
@@ -105,14 +127,12 @@ const getRoverData = rover => {
     .then(data => {
       let rovers = data.image.photos[0];
       updateStore(store, { rovers });
-      console.log(store);
     });
 };
 
-//DOM
-const rovers = document.querySelector('#rovers');
-rovers.addEventListener('input', e => {
-  getRoverData(e.target.value);
-});
+getRoverData('spirit');
 
-console.log(store);
+rovers.addEventListener('input', e => {
+  let roverData = document.querySelector('#rovers');
+  getRoverData(roverData.value);
+});
