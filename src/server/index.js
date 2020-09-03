@@ -14,27 +14,17 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 
 // your API calls
 
-// example API call
-app.get('/apod', async (req, res) => {
-  console.log(image);
-  try {
-    let image = await fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${process.env.API_KEY}`
-    ).then(res => res.json());
-
-    res.send({ image });
-  } catch (err) {
-    console.log('error:', err);
-  }
-});
-
 //get curiosity data
 app.get('/curiosity', async (req, res) => {
   try {
     let image = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=${process.env.API_KEY}`
-    ).then(res => res.json());
-    res.send({ image });
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=Or9r2rTMDXDNmhO9WxmB55G5yQLRMLcu0mTsS0jO`
+    );
+    const data = await image.json();
+
+    const roverImages = data.photos.splice(0, 5);
+    const roverData = data.photos[0];
+    res.send({ roverData, roverImages });
   } catch (err) {
     console.log('error:', err);
   }
@@ -44,10 +34,13 @@ app.get('/curiosity', async (req, res) => {
 app.get('/opportunity', async (req, res) => {
   try {
     let image = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=10&api_key=${process.env.API_KEY}`
-    ).then(res => res.json());
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=10&api_key=Or9r2rTMDXDNmhO9WxmB55G5yQLRMLcu0mTsS0jO`
+    );
+    const data = await image.json();
 
-    res.send({ image });
+    const roverImages = data.photos.splice(0, 5);
+    const roverData = data.photos[0];
+    res.send({ roverData, roverImages });
   } catch (err) {
     console.log('error:', err);
   }
@@ -57,9 +50,13 @@ app.get('/opportunity', async (req, res) => {
 app.get('/spirit', async (req, res) => {
   try {
     let image = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=10&api_key=${process.env.API_KEY}`
-    ).then(res => res.json());
-    res.send({ image });
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=10&api_key=Or9r2rTMDXDNmhO9WxmB55G5yQLRMLcu0mTsS0jO`
+    );
+    const data = await image.json();
+
+    const roverImages = data.photos.splice(0, 5);
+    const roverData = data.photos[0];
+    res.send({ roverData, roverImages });
   } catch (err) {
     console.log('error:', err);
   }

@@ -1,0 +1,23 @@
+.mm-survey-container {
+  width: 100%;
+  min-height: 100px;
+  background: #fafafa;
+}
+
+.mm-survey-page {
+  display: none;
+  font-family: 'Raleway';
+  font-weight: 100;
+  padding: 40px;
+}
+
+.mm-survey-page.active {
+  display: block;
+}
+
+.mm-survey-question p {
+  font-size: 22px;
+  font-weight: 200;
+  margin-bottom: 20px;
+  line-height: 40px;
+}
