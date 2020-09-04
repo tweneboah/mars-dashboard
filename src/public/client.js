@@ -16,7 +16,8 @@ const render = (root, state) => {
 
 // create content
 const App = state => {
-  return `${displayRoverDetails(store)}
+  return `
+  ${displayRoverDetails(store)}
   <section class="container">
   ${displayRoverImages(store)}
   </section>
@@ -32,6 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // ------------------------------------------------------  COMPONENTS
 
 // ------------------------------------------------------  API CALLS
+
 //get Rover data
 const getRoverData = async rover => {
   console.log('I was called');
@@ -40,25 +42,26 @@ const getRoverData = async rover => {
   updateStore(store, data);
 };
 
-getRoverData('opportunity');
+getRoverData('spirit');
 
 //Display rover details
 
 const displayRoverDetails = rover => {
+  console.log(rover.roverData);
   if (rover.roverData === undefined) {
-    return `<h1>Loading</h1>`;
+    return '';
   } else {
     return `<div class="rover-container">
-    <h1>Rover Name</h1>
+    <h2>Rover Details</h2>
     <div class="child">
       <div class="card">
         <div class="header">
-          <h1>1</h1>
+          <h1>${rover.roverData.rover.name}</h1>
         </div>
         <div class="container-child">
-          <p>January 1, 2016</p>
-          <p>January 1, 2016</p>
-          <p>January 1, 2016</p>
+          <p>Lunch-Date: ${rover.roverData.rover.launch_date}</p>
+          <p>Landing-Date: ${rover.roverData.rover.landing_date}</p>
+          <p>Status: ${rover.roverData.rover.status}</p>
         </div>
       </div>
     </div>
@@ -70,9 +73,10 @@ const displayRoverDetails = rover => {
 const displayRoverImages = roverImages => {
   if (roverImages.roverImages !== undefined) {
     return roverImages.roverImages.map(rover => {
+      console.log('Details', rover);
       return `<div>
       <img src=${rover.img_src} alt="First description" />
-      <span class="description">First description</span>
+      <span class="description">${rover.earth_date}</span>
   </div>
   `;
     });
@@ -80,7 +84,10 @@ const displayRoverImages = roverImages => {
     return '<h1>Loading</h1>';
   }
 };
-// rovers.addEventListener('input', e => {
-//   let roverData = document.querySelector('#rovers');
-//   getRoverData(roverData.value);
-// });
+
+const rovers = document.querySelector('#rovers');
+rovers.addEventListener('input', e => {
+  console.log(e.target.value);
+  getRoverData(e.target.value);
+  let roverData = document.querySelector('#rovers');
+});
